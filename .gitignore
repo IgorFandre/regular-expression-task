@@ -1,0 +1,7 @@
+.vscode
+.DS_store
+bin
+lib
+build
+code_coverage_report
+code_coverage.info
