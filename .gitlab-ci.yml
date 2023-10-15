@@ -15,7 +15,7 @@ build:
     - cd ..
   artifacts:
     paths:
-      - bin/test_bank_system
+      - bin/test_main
       - lib/*
   tags:
     - common
@@ -24,7 +24,7 @@ build:
 test:
   stage: test
   script:
-    - bin/test_bank_system
+    - bin/test_main
   tags:
     - common
     - cpu

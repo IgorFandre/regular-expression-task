@@ -13,6 +13,7 @@ class RegularExpr {
   RegularExpr(const std::string&);
 
   StateMachine ParseRegular() const;
+  int FindSuffixInRegularSuffixes(const std::string&) const;
 
   friend std::istream& operator>>(std::istream&, RegularExpr&);
 

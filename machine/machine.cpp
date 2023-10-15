@@ -308,9 +308,24 @@ bool StateMachine::DFSFind(int vert, const std::string& word, int word_idx, int 
   return false;
 }
 
-bool StateMachine::FindWordInNonDeterministic(const std::string& word) const {
+bool StateMachine::FindWordInNonDeterministicFromVert(const std::string& word, int vert) const {
   std::vector<bool> used(states_, false);
-  return DFSFind(start_state_, word, 0, 0, (static_cast<int>(word.size()) + 1) * states_, used);
+  return DFSFind(vert, word, 0, 0, (static_cast<int>(word.size()) + 1) * states_, used);
+}
+
+bool StateMachine::FindWordInNonDeterministic(const std::string& word) const {
+  return FindWordInNonDeterministicFromVert(word, start_state_);
+}
+
+bool StateMachine::FindWordInNonDeterministicInSuffixes(const std::string& word, int start_idx = 0) const {
+  std::string suffix = word.substr(start_idx, static_cast<int>(word.size()) - start_idx);
+  for (int vert = 0; vert < states_; ++vert) {
+    bool find = FindWordInNonDeterministicFromVert(suffix, vert);
+    if (find) {
+      return true;
+    }
+  }
+  return false;
 }
 
 void StateMachine::MakeTransition(int from, int to, char alpha) {

@@ -32,10 +32,10 @@ class StateMachine {
   StateMachine MakeDeterministicMachine() const;
 
   bool FindWordInDeterministic(const std::string&) const;
-
   bool FindWordInDeterministicInSuffixes(const std::string&, int) const;
 
   bool FindWordInNonDeterministic(const std::string&) const;
+  bool FindWordInNonDeterministicInSuffixes(const std::string&, int) const;
 
   void MakeTransition(int, int, char);
   void MakeStartState(int);
@@ -50,8 +50,12 @@ class StateMachine {
 
  private:
   bool FindWordInDeterministicFromVert(const std::string&, int) const;
+  bool FindWordInNonDeterministicFromVert(const std::string&, int) const;
+
   void ResizeTransitions(int);
+
   bool DFSFind(int, const std::string&, int, int, int, std::vector<bool>&) const;
+
   int states_;
   std::vector<std::vector<std::array<bool, kAlphabetSize>>> transitions_;
   int start_state_;

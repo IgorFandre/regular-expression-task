@@ -34,6 +34,17 @@ StateMachine RegularExpr::ParseRegular() const {
   return st.top();
 }
 
+int RegularExpr::FindSuffixInRegularSuffixes(const std::string& word) const {
+  StateMachine regex_machine = ParseRegular();
+  for (int i = 0; i < static_cast<int>(word.size()); ++i) {
+    bool find = regex_machine.FindWordInNonDeterministicInSuffixes(word, i);
+    if (find) {
+        return static_cast<int>(word.size()) - i;
+    }
+  }
+  return 0;
+}
+
 std::istream& operator>>(std::istream& in, RegularExpr& regex) {
   in >> regex.regexpr_;
   return in;

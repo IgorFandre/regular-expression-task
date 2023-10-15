@@ -45,6 +45,8 @@ set(TEST_SOURCES
         # Test cases
         # -------------------------------------------
 
+        tests/basic_test.cpp
+
         tests/test_helper.cpp
 
         tests/deterministic_test.cpp
