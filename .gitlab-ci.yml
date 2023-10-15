@@ -23,6 +23,9 @@ build:
 
 test:
   stage: test
+  before_script:
+    - apt update
+    - apt install -y cmake build-essential libgtest-dev
   script:
     - bin/test_main
   tags:
