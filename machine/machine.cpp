@@ -105,21 +105,22 @@ StateMachine operator*(const StateMachine& st1, const StateMachine& st2) {
 
 StateMachine StateMachine::operator++(int) const {
   int new_st_states = states_;
-  StateMachine new_st(new_st_states);
+  StateMachine new_st(1 + new_st_states);
 
-  new_st.start_state_ = start_state_;
+  new_st.start_state_ = 0;
   new_st.finish_states_.emplace(new_st.start_state_);
 
   for (int i = 0; i < states_; ++i) {
     for (int j = 0; j < states_; ++j) {
       for (int k = 0; k < kAlphabetSize; ++k) {
-        new_st.transitions_[i][j][k] = transitions_[i][j][k];
+        new_st.transitions_[i + 1][j + 1][k] = transitions_[i][j][k];
       }
     }
   }
 
+  new_st.transitions_[new_st.start_state_][start_state_ + 1][eps_idx] = true;
   for (int finish : finish_states_) {
-    new_st.transitions_[finish][new_st.start_state_][eps_idx] = true;
+    new_st.transitions_[finish + 1][new_st.start_state_][eps_idx] = true;
   }
 
   return new_st;
