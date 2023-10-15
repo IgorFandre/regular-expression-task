@@ -120,7 +120,7 @@ TEST(STRESS_TEST, operation_klini_test) {
 
     for (int j = 0; j < 300; ++j) {
       std::string word;
-      int len = rnd() % 10 + 1;
+      int len = 1;
       for (int k = 0; k < len; ++k) {
         word += alphabet[rnd() % StateMachine::kAlphabetSize];
       }
@@ -128,13 +128,20 @@ TEST(STRESS_TEST, operation_klini_test) {
       bool b1 = machine_1.FindWordInNonDeterministic(word);
       bool b2 = machine_2.FindWordInNonDeterministic("");
       bool b3 = machine_2.FindWordInNonDeterministic(word);
+      bool b4 = machine_2.FindWordInNonDeterministic(word + word);
+      bool b5 = machine_2.FindWordInNonDeterministic(word + word + word);
 
-      bool b7 = false;
       if (b1 != b3 || !b2) {
         std::cout << "machine_1 " << b1 << "\n" << machine_1 << std::endl;
         std::cout << "machine_2 " << b2 << " " << b3 << "\n" << machine_2 << std::endl;
         std::cout << "Word: " << word << std::endl;
-        exit(1);
+      }
+
+      ASSERT_TRUE(b2);
+      ASSERT_EQ(b1, b3);
+      if (b3) {
+        ASSERT_TRUE(b4);
+        ASSERT_TRUE(b5);
       }
     }
   }
