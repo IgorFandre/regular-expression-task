@@ -130,6 +130,8 @@ void StateMachine::DeleteEpsTransitions() {
   struct Edge {
     int from;
     int to;
+    Edge() = default;
+    Edge(int from, int to) : from(from), to(to) {}
   };
   std::vector<Edge> eps_transitions;
   for (int i = 0; i < states_; ++i) {
