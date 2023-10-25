@@ -280,6 +280,8 @@ bool StateMachine::FindWordInDeterministicInSuffixes(const std::string& word, in
   return false;
 }
 
+
+// Классический рекурсивный dfs по графу
 bool StateMachine::DFSFind(int vert, const std::string& word, int word_idx, int depth, int max_depth, std::vector<bool>& used) const {
   if (depth > max_depth || used[vert]) {
     return false;
@@ -311,6 +313,10 @@ bool StateMachine::DFSFind(int vert, const std::string& word, int word_idx, int 
   return false;
 }
 
+// Делает поиск по автомату начиная с состояния vert.
+// Ограничение max_depth = (static_cast<int>(word.size()) + 1) * states_ значит,
+// что для поиска перехода по каждой букве в худшем случае мы пройдем по eps-пути по всем вершинам.
+// used используем, чтобы не попадать в eps циклы
 bool StateMachine::FindWordInNonDeterministicFromVert(const std::string& word, int vert) const {
   std::vector<bool> used(states_, false);
   return DFSFind(vert, word, 0, 0, (static_cast<int>(word.size()) + 1) * states_, used);
@@ -320,6 +326,8 @@ bool StateMachine::FindWordInNonDeterministic(const std::string& word) const {
   return FindWordInNonDeterministicFromVert(word, start_state_);
 }
 
+// Запускает поиск dfs из всех возможных вершин.
+// Вернет true, если существует vert, такая что (word[start:], vert) |- (eps, f), гдe f - финишное состояние.
 bool StateMachine::FindWordInNonDeterministicInSuffixes(const std::string& word, int start_idx = 0) const {
   std::string suffix = word.substr(start_idx, static_cast<int>(word.size()) - start_idx);
   for (int vert = 0; vert < states_; ++vert) {

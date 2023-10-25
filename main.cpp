@@ -4,7 +4,9 @@
 #include "regular/regular.h"
 
 int main() {
+  // Создаю объект, куда буду записывать выражение
   RegularExpr regex;
+  // Создаю объект, куда буду записывать слово
   std::string word;
   std::cin >> regex >> word;
   int result = regex.FindSuffixInRegularSuffixes(word);

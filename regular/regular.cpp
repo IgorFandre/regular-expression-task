@@ -34,6 +34,8 @@ StateMachine RegularExpr::ParseRegular() const {
   return st.top();
 }
 
+// Функция проходится по всем суффиксам слова и запускает функцию поиска среди суффиксов регулярного выражения.
+// Останавливается на первом найденном суффиксе.
 int RegularExpr::FindSuffixInRegularSuffixes(const std::string& word) const {
   StateMachine regex_machine = ParseRegular();
   for (int i = 0; i < static_cast<int>(word.size()); ++i) {
